@@ -6,10 +6,11 @@ const { writeFile } = require('fs')
 //  When set to false, the FAKE_DATABASE resets every time the server re-starts.
 const CHANGE_DATABASE = false
 let FAKE_DATABASE
+//  More than one database can be created with each database name being passed as a parameter
 const DATABASE_NAME = 'data'
 
 //  Helper functions to read & update the JSON file
-const getAllData = async () => {
+async function getAllData() {
   if (FAKE_DATABASE && !CHANGE_DATABASE) return FAKE_DATABASE
   return JSON.parse(
     await readFile(
@@ -18,18 +19,18 @@ const getAllData = async () => {
   )
 }
 
-//  Any search term is input AND filtered
-//    within the notes.ejs page itself.
+//  FAKE_DATABASE must be decalared before getAllData(), but it
+//  can't be given it's value untill after getAllData() is run.
 FAKE_DATABASE = getAllData()
 
-const getSingleItem = async id => {
+async function getSingleItem(id) {
   console.log(id)
   const DATA = await getAllData()
   const data = DATA.find(item => +item.id === +id)
   return data
 }
 
-const addData = async data => {
+async function addData(data) {
   const DATA = await getAllData()
   const id = DATA.length > 0 ? DATA[DATA.length - 1].id + 1 : 1
   // const stamp = Date.now()
@@ -43,11 +44,11 @@ const addData = async data => {
   return DATA
 }
 
-const deleteItem = async id => {
+async function deleteItem(id) {
   // let DATA
   // DATA = await getAllData()
   // DATA = DATA.filter(note => note.id !== +id)
-  
+
   DATA = await getAllData()
   const item = await getSingleItem(+id)
   const index = DATA.indexOf(item)
@@ -59,7 +60,7 @@ const deleteItem = async id => {
   return DATA
 }
 
-const updateItem = async ({ id: id, newData: newData }) => {
+async function updateItem({ id: id, newData: newData }) {
   console.log(id, newData)
   let DATA
   DATA = await getAllData()

@@ -13,6 +13,7 @@ DATABASE.addData(data)
 //  The joi package is pretty cool for validating the data sent.
 
 const schema = { name: Joi.string().min(3).required() }
+
 if (joi.validate(data, schema) {
   //  run this code
 }

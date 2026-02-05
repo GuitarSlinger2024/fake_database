@@ -1,9 +1,9 @@
 This is meant as a temporary database for developers who don't want to
 bother with creating another database right away (mySql, mongoDB, etc).
 The really cool thing about this is that by setting the CHANGE_DATABASE variable
-to true causes the actuall data.json file to be changed. This works well when 
+to true the actuall data.json file can be changed. This works well when first
 entering test data. Then, setting CHANGE_DATABASWE to false allows that data
-to be refreshed every time the app is restarted.
+to be refreshed to whatever is in the data.json file every time the app is restarted.
 
 In whatever file needs access to the database, include this:
 
